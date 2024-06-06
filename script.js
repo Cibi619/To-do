@@ -12,10 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let newRow = document.createElement('span');
         newRow.setAttribute('class', 'list');
         newRow.textContent = enteredText;
+        let editRow = document.createElement('i');
+        editRow.setAttribute('class', 'edit fa fa-edit');
         let deleteRow = document.createElement('i');
         deleteRow.setAttribute('class', 'material-icons ml-auto');
         deleteRow.innerHTML = 'delete';
         listItem.appendChild(newRow);
+        listItem.appendChild(editRow);
         listItem.appendChild(deleteRow);
         listContainer.appendChild(listItem);
         totalList.push(enteredText);
@@ -26,6 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const index = totalList.indexOf(enteredText);
             if (index > -1) {
                 totalList.splice(index, 1);
+            }
+        });
+        editRow.addEventListener('click', () => {
+            newRow.contentEditable = true;
+            newRow.focus();
+            newRow.style.border = '1px solid #ddd'; // Optional: Add a border to indicate edit mode
+        });
+        newRow.addEventListener('blur', () => {
+            newRow.contentEditable = false;
+            newRow.style.border = 'none'; // Remove border after editing
+            const index = totalList.indexOf(enteredText);
+            if (index > -1) {
+                totalList[index] = newRow.textContent; // Update the list with the new text
             }
         });
         // totalList.forEach((item) => {
